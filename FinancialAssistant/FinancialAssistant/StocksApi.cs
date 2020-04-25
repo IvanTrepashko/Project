@@ -5,17 +5,15 @@ using System.Threading.Tasks;
 
 namespace FinancialAssistant
 {
-    public static class StocksApi
+    public class StocksApi : IApi<List<Stock>>
     {
-        public static List<Stock> Stocks { get; set; }
-
-        public static async Task<List<Stock>> LoadStocks()
+        private readonly string apiKey = "MXTV6NZL7W973PJ2";
+        public async Task<List<Stock>> Load()
         {
             string url;
-            string apiKey = "MXTV6NZL7W973PJ2";
             string[] stockTickets = { "AAPL", "BRK.A", "INTC", "MSFT", "HOG" };
-
             List<Stock> stocks = new List<Stock>();
+            
             ApiHelper.InitializeClient();
 
             foreach (var ticket in stockTickets)
@@ -37,20 +35,6 @@ namespace FinancialAssistant
                 }
             }
             return stocks;
-        }
-
-        public static async Task InitializeStocks()
-        {
-                Stocks = await LoadStocks();
-        }
-
-        public static void ShowAllStocks()
-        {
-            foreach (var stock in Stocks)
-            {
-                stock.ShowStockInfo();
-                Console.WriteLine();
-            }
         }
     }
 }

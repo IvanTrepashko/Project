@@ -13,7 +13,7 @@ namespace NbrbAPI.Models
         public string Cur_Abbreviation { get; set; }
         public int Cur_Scale { get; set; }
         public string Cur_Name { get; set; }
-        public decimal Cur_OfficialRate { get; set; }
+        public double Cur_OfficialRate { get; set; }
 
         public override string ToString()
         {
