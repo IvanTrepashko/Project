@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 namespace FinancialAssistant
 {
@@ -8,7 +6,6 @@ namespace FinancialAssistant
     {
         public static async Task MainMenuAsync()
         {
-
             while (true)
             {
                 Console.Clear();

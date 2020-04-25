@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using NbrbAPI.Models;
 using System.Linq;
+using System.Globalization;
+
 
 namespace FinancialAssistant
 {
@@ -36,6 +37,7 @@ namespace FinancialAssistant
         private static async Task<Currency[]> LoadCurrenciesInfo()
         {
             string url = @"https://www.nbrb.by/api/exrates/currencies";
+
             using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(url))
             {
                 if (response.IsSuccessStatusCode)
@@ -68,9 +70,14 @@ namespace FinancialAssistant
         public static void ShowAllRates()
         {
             Console.WriteLine($"Currency rates on {DateTime.Now.Date.ToString("yyyy-mm-dd")}:");
-            foreach (var rate in Rates)
+            Console.WriteLine();
+            for (int i = 0, j = Rates.Count/2; i < Rates.Count/2 && j < Rates.Count;i++,j++)
             {
-                rate.ShowInformation();
+                Console.WriteLine("Currency name : {0,-30} Currency name : {1}",Rates[i].Cur_Name,Rates[j].Cur_Name);
+                string rate1 = Rates[i].Cur_Scale + " " + Rates[i].Cur_Abbreviation + " - " + Rates[i].Cur_OfficialRate.ToString("C", CultureInfo.CreateSpecificCulture("be-BY"));
+                string rate2 = Rates[j].Cur_Scale + " " + Rates[j].Cur_Abbreviation + " - " + Rates[j].Cur_OfficialRate.ToString("C", CultureInfo.CreateSpecificCulture("be-BY"));
+                
+                Console.WriteLine("Rate : {0,-38}  Rate : {1} ",rate1,rate2);
                 Console.WriteLine();
             }
         }

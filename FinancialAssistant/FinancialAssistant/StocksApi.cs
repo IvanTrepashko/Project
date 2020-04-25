@@ -1,8 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FinancialAssistant
@@ -14,7 +12,7 @@ namespace FinancialAssistant
         public static async Task<List<Stock>> LoadStocks()
         {
             string url;
-            string apiKey="MXTV6NZL7W973PJ2";
+            string apiKey = "MXTV6NZL7W973PJ2";
             string[] stockTickets = { "AAPL", "BRK.A", "INTC", "MSFT", "HOG" };
 
             List<Stock> stocks = new List<Stock>();
@@ -43,7 +41,7 @@ namespace FinancialAssistant
 
         public static async Task InitializeStocks()
         {
-            Stocks = await LoadStocks();
+                Stocks = await LoadStocks();
         }
 
         public static void ShowAllStocks()
