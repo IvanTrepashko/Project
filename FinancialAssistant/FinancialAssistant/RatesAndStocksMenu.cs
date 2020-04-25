@@ -6,6 +6,8 @@ namespace FinancialAssistant
     {
         public static async Task MainMenuAsync(RatesRepository rates)
         {
+            bool isNew=false;
+            StocksRepository stocks=null;
             while (true)
             {
                 Console.Clear();
@@ -24,8 +26,12 @@ namespace FinancialAssistant
                     case 2:
                         {
                             Console.Clear();
-                            StocksRepository stocks = new StocksRepository();
-                            await stocks.CreateRepository();
+                            if (!isNew)
+                            {
+                                stocks = new StocksRepository();
+                                await stocks.CreateRepository();
+                                isNew = true;
+                            }
                             stocks.ShowAll();
                             Console.Read();
                             break;

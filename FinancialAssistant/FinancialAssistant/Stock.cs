@@ -10,7 +10,21 @@ namespace FinancialAssistant
 
         public void ShowStockInfo()
         {
-            Console.WriteLine($"{StockInfo.Symbol}\nOpened : {StockInfo.Open}.\nClosed : {StockInfo.Price}.\nPreviously closed : {StockInfo.Previously_Close}.");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write($"{StockInfo.Symbol}\n");
+            Console.ResetColor();
+            Console.Write("Opened : ");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"{StockInfo.Open}");
+            Console.ResetColor();
+            Console.Write("Closed : ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"{StockInfo.Price}");
+            Console.ResetColor();
+            Console.Write("Previously closed : ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(StockInfo.Previously_Close);
+            Console.ResetColor();
         }
     }
 }

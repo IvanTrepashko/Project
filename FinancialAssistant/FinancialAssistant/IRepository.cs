@@ -10,6 +10,5 @@ namespace FinancialAssistant
         Task CreateRepository();
         void ShowAll();
         T GetById(int id);
-
     }
 }

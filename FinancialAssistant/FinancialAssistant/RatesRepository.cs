@@ -63,11 +63,13 @@ namespace FinancialAssistant
             Console.WriteLine();
             for (int i = 0, j = Rates.Count / 2; i < Rates.Count / 2 && j < Rates.Count; i++, j++)
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Currency name : {0,-30} Currency name : {1}", Rates[i].Cur_Name, Rates[j].Cur_Name);
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 string rate1 = Rates[i].Cur_Scale + " " + Rates[i].Cur_Abbreviation + " - " + Rates[i].Cur_OfficialRate.ToString("C", CultureInfo.CreateSpecificCulture("be-BY"));
                 string rate2 = Rates[j].Cur_Scale + " " + Rates[j].Cur_Abbreviation + " - " + Rates[j].Cur_OfficialRate.ToString("C", CultureInfo.CreateSpecificCulture("be-BY"));
-
                 Console.WriteLine("Rate : {0,-38}  Rate : {1} ", rate1, rate2);
+                Console.ResetColor();
                 Console.WriteLine();
             }
         }

@@ -24,7 +24,8 @@ namespace NbrbAPI.Models
 
         public void ShowInformation()
         {
-            Console.WriteLine($"Currency name : {Cur_Name}.\n{Cur_Scale} {Cur_Abbreviation} : {Cur_OfficialRate.ToString("C", _culture)}.");
+            Console.Write($"Currency name : {Cur_Name}.\n");
+            Console.WriteLine($"{Cur_Scale} {Cur_Abbreviation} : {Cur_OfficialRate.ToString("C", _culture)}.");
         }
     }
 }

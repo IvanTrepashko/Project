@@ -30,11 +30,13 @@ namespace FinancialAssistant
         public static void DisplayMainMenu()
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("{0,-40} {1,40}", RatesRepository.Usd, DateTime.Now);
             Console.WriteLine(RatesRepository.Eur);
             Console.WriteLine("\n\n");
-            Console.WriteLine("Welcome to Financial Assistance.\nWhat do you want to do?\n");
-            Console.WriteLine("1. More about currency rates and stocks");
+            Console.ResetColor();
+            Console.WriteLine("Welcome to Your Financial Assistant.\nWhat do you want to do?\n");
+            Console.WriteLine("1. Currency rates and stocks.");
         }
     }
 }
