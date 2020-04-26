@@ -8,5 +8,8 @@ namespace FinancialAssistant
     {
         void Add(T obj);
         List<T> GetAll();
+        void ShowAll();
+        void WriteToFile();
+        void Delete();
     }
 }

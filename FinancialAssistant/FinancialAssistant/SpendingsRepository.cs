@@ -10,14 +10,17 @@ namespace FinancialAssistant
 {
     public class SpendingsRepository: IRepository<Spending>
     {
+        public delegate void CreditPaymentAdded(double sum);
+
+        public event CreditPaymentAdded PaymentAdded = CreditsRepository.UpdateRemainingAmount;
 
         private readonly CultureInfo _culture = CultureInfo.CreateSpecificCulture("be-BY");
         private List<Spending> _spendings = new List<Spending>();
         private double _totalSpent;
-        
+
         public SpendingsRepository()
         {
-            var data = File.ReadAllLines(@"C:\Users\itrep\Desktop\project\project\FinancialAssistant\FinancialAssistant\data.csv");
+            var data = File.ReadAllLines(@"spendings.csv");
 
             foreach (var spending in data.Skip(1))
             {
@@ -36,7 +39,16 @@ namespace FinancialAssistant
 
         public void Add(Spending spending)
         {
+            if (spending.Category==SpendingCategory.CreditPayment)
+            {
+                PaymentAdded(spending.MoneyAmount);
+            }
             _spendings.Add(spending);
+        }
+
+        public void Delete()
+        {
+            throw new NotImplementedException();
         }
 
         public List<Spending> GetAll()
@@ -56,10 +68,12 @@ namespace FinancialAssistant
                 Console.Write($"{spending.MoneyAmount.ToString("C",_culture),12}");
                 Console.ResetColor();
                 Console.Write("|");
+
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write($"{spending.Category,16}");
                 Console.ResetColor();
                 Console.Write("|");
+
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write($"{spending.Date.DateTime.Date.ToLocalTime().ToString("yyyy-MM-dd"),13}");
                 Console.ResetColor();
@@ -89,10 +103,12 @@ namespace FinancialAssistant
                 Console.Write($"{spending.MoneyAmount.ToString("C",_culture),12}");
                 Console.ResetColor();
                 Console.Write("|");
+
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write($"{spending.Category,16}");
                 Console.ResetColor();
                 Console.Write("|");
+
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write($"{spending.Date.DateTime.Date.ToLocalTime().ToString("yyyy-MM-dd"),13}");
                 Console.ResetColor();
@@ -148,7 +164,7 @@ namespace FinancialAssistant
                 strArr[index] = spending.ToString();
                 index++;
             }
-            File.WriteAllLines(@"C:\Users\itrep\Desktop\project\project\FinancialAssistant\FinancialAssistant\data.csv", strArr);
+            File.WriteAllLines(@"C:\Users\itrep\Desktop\project\project\FinancialAssistant\FinancialAssistant\spendings.csv", strArr);
         }
     }
 }
