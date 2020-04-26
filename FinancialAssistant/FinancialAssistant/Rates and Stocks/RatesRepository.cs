@@ -9,7 +9,7 @@ using System.Collections;
 
 namespace FinancialAssistant
 {
-    public class RatesRepository : IRepository<Rate>, IEnumerable<Rate>
+    public class RatesRepository : IApiRepository<Rate>, IEnumerable<Rate>
     {
         private readonly int _usdId=145;
         private readonly int _eurId = 292;

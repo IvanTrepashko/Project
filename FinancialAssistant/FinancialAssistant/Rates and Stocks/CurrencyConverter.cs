@@ -26,12 +26,12 @@ namespace FinancialAssistant
                 string str2 = $"{j+1}. {rates[j].Cur_Name} ({rates[j].Cur_Abbreviation})";
                 Console.WriteLine($"{str1,-30} {str2}");
             }
-            while(!int.TryParse(Console.ReadLine(),out rateNumber1) || rateNumber1>=number || rateNumber1<=0)
+            while(!int.TryParse(Console.ReadLine(),out rateNumber1) || rateNumber1>=number || !rateNumber1.IsPositive())
             {
                 Console.WriteLine("Wrong input. Please, try again.");
             }
             
-            while(!int.TryParse(Console.ReadLine(),out rateNumber2) || rateNumber2>=number || rateNumber2 <= 0)
+            while(!int.TryParse(Console.ReadLine(),out rateNumber2) || rateNumber2>=number || !rateNumber2.IsPositive())
             {
                 Console.WriteLine("Wrong input. Please, try again.");
             }

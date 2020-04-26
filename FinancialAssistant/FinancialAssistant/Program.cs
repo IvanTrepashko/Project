@@ -21,6 +21,11 @@ namespace FinancialAssistant
                             await RatesAndStocksMenu.MainMenuAsync(rates);
                             break;
                         }
+                    case 2:
+                        {
+                            SpendingManagementMenu.MainMenu();
+                            break;
+                        }
                     default:
                         return;
                 }
@@ -36,7 +41,7 @@ namespace FinancialAssistant
             Console.WriteLine("\n\n");
             Console.ResetColor();
             Console.WriteLine("Welcome to Your Financial Assistant.\nWhat do you want to do?\n");
-            Console.WriteLine("1. Currency rates and stocks.");
+            Console.WriteLine("1. Currency rates and stocks.\n2. Spendings management.");
         }
     }
 }

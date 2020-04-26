@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FinancialAssistant
 {
-    class StocksRepository:IRepository<Stock>
+    class StocksRepository:IApiRepository<Stock>
     {
         public List<Stock> Stocks { get; set; }
 
