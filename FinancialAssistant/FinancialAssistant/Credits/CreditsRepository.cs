@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Linq;
 using System.Globalization;
 
 namespace FinancialAssistant
 {
-    
+
 
     public class CreditsRepository : IRepository<Credit>
     {
-        
-
         private List<Credit> _credits = new List<Credit>();
         private readonly CultureInfo _culture = CultureInfo.CreateSpecificCulture("be-BY");
 
@@ -54,7 +51,7 @@ namespace FinancialAssistant
 
             creditsRepository.ShowAll();
 
-            Console.WriteLine("Please, enter credit ID");
+            Console.WriteLine("Please, enter credit ID.");
 
             while (!int.TryParse(Console.ReadLine(), out index) || !index.IsPositive())
             {
@@ -77,7 +74,7 @@ namespace FinancialAssistant
         {
             if (_credits.Count==0)
             {
-                Console.WriteLine("You don't have any credits");
+                Console.WriteLine("You don't have any credits.");
                 return;
             }
             Console.WriteLine(" ________________________________________________________________________________");
@@ -140,10 +137,10 @@ namespace FinancialAssistant
             {
                 Console.Clear();
                 ShowAll();
-                Console.WriteLine("Please, enter an ID of credit you want to delete ('0' to exit)");
+                Console.WriteLine("Please, enter an ID of credit you want to delete ('0' to exit).");
                 while (!int.TryParse(Console.ReadLine(), out choice) || choice > _credits.Count)
                 {
-                    Console.WriteLine("Wrong input. Please, try again");
+                    Console.WriteLine("Wrong input. Please, try again.");
                 }
                 if (choice == 0)
                     return;

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Linq;
 using System.Globalization;
@@ -11,8 +10,10 @@ namespace FinancialAssistant
     public class SpendingsRepository: IRepository<Spending>
     {
         public delegate void CreditPaymentAdded(double sum);
+        public delegate void SpendingAdded(Spending spending);
 
-        public event CreditPaymentAdded PaymentAdded = CreditsRepository.UpdateRemainingAmount;
+        private event CreditPaymentAdded PaymentAdded = CreditsRepository.UpdateRemainingAmount;
+        private event SpendingAdded spendingAdded = BudgetPlan.SpendingAdded;
 
         private readonly CultureInfo _culture = CultureInfo.CreateSpecificCulture("be-BY");
         private List<Spending> _spendings = new List<Spending>();
@@ -43,6 +44,9 @@ namespace FinancialAssistant
             {
                 PaymentAdded(spending.MoneyAmount);
             }
+
+            spendingAdded(spending);
+
             _spendings.Add(spending);
         }
 
@@ -58,9 +62,15 @@ namespace FinancialAssistant
 
         public void ShowAll()
         {
+            if (_spendings.Count==0)
+            {
+                Console.WriteLine("You don't have any spendings yet.");
+                return;
+            }
             Console.WriteLine(" ___________________________________________");
             Console.WriteLine("|   Money    |    Category    |     Date    |");
             Console.WriteLine(" ___________________________________________");
+            
             foreach (var spending in _spendings)
             {
                 Console.Write($"|");
@@ -79,7 +89,9 @@ namespace FinancialAssistant
                 Console.ResetColor();
                 Console.WriteLine("|");
             }
+
             Console.WriteLine(" ___________________________________________");
+            
             Console.Write("Total spent : ");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine($"{_totalSpent.ToString("C",_culture)}.");
@@ -90,7 +102,7 @@ namespace FinancialAssistant
         {
             if (spendings.Count==0)
             {
-                Console.WriteLine("Nothing to show.");
+                Console.WriteLine("You don't have any spendings yet.");
                 return;
             }
             Console.WriteLine(" ___________________________________________");

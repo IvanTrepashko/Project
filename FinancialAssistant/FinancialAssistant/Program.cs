@@ -8,8 +8,8 @@ namespace FinancialAssistant
     {
         public static async Task Main()
         {
-        //    RatesRepository rates = new RatesRepository();
-         //   await rates.CreateRepository();
+            RatesRepository rates = new RatesRepository();
+            await rates.CreateRepository();
             while (true)
             {
                 DisplayMainMenu();
@@ -18,7 +18,7 @@ namespace FinancialAssistant
                 {
                     case 1:
                         {
-         //                   await RatesAndStocksMenu.MainMenuAsync(rates);
+                            await RatesAndStocksMenu.MainMenuAsync(rates);
                             break;
                         }
                     case 2:
@@ -51,13 +51,13 @@ namespace FinancialAssistant
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Cyan;
-       //     Console.WriteLine("{0,-40} {1,40}", RatesRepository.Usd, DateTime.Now);
-        //    Console.WriteLine(RatesRepository.Eur);
+            Console.WriteLine("{0,-40} {1,40}", RatesRepository.Usd, DateTime.Now);
+            Console.WriteLine(RatesRepository.Eur);
             Console.WriteLine("\n\n");
             Console.ResetColor();
             Console.WriteLine("Welcome to Your Financial Assistant.\nWhat do you want to do?\n");
             Console.WriteLine("1. Currency rates and stocks.\n2. Spendings management.\n3. Credits.\n4. Deposits.");
-            Console.WriteLine("5. Budget planning.");
+            Console.WriteLine("5. Budget planning.\n6. Exit.");
         }
     }
 }

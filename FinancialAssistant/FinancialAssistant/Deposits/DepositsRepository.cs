@@ -69,10 +69,10 @@ namespace FinancialAssistant
             {
                 Console.Clear();
                 ShowAll();
-                Console.WriteLine("Please, enter an ID of credit you want to delete ('0' to exit)");
+                Console.WriteLine("Please, enter an ID of credit you want to delete ('0' to exit).");
                 while (!int.TryParse(Console.ReadLine(), out choice) || choice > _deposits.Count)
                 {
-                    Console.WriteLine("Wrong input. Please, try again");
+                    Console.WriteLine("Wrong input. Please, try again.");
                 }
                 if (choice == 0)
                     return;

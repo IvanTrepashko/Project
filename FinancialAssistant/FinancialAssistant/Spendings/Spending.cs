@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using System.Globalization;
 
 
 namespace FinancialAssistant
@@ -14,7 +10,7 @@ namespace FinancialAssistant
         PublicTransport,
         Entertainment,
         CreditPayment,
-        Appliance,
+        Fuel,
         Subscription,
         Clothes,
         Other
@@ -42,10 +38,10 @@ namespace FinancialAssistant
             Spending spending=new Spending();
             double money;
 
-            Console.WriteLine("Enter an amount of money");
+            Console.WriteLine("Enter an amount of money.");
             while(!double.TryParse(Console.ReadLine(), out money) || !money.IsPositive())
             {
-                Console.WriteLine("Wrong input. Please, try again");
+                Console.WriteLine("Wrong input. Please, try again.");
             }
 
             SpendingCategory category = (SpendingCategory)Spending.ChooseCategory();
@@ -71,11 +67,11 @@ namespace FinancialAssistant
             Console.WriteLine($"3. {SpendingCategory.PublicTransport}.");
             Console.WriteLine($"4. {SpendingCategory.Entertainment}.");
             Console.WriteLine($"5. {SpendingCategory.CreditPayment}.");
-            Console.WriteLine($"6. {SpendingCategory.Appliance}.");
+            Console.WriteLine($"6. {SpendingCategory.Fuel}.");
             Console.WriteLine($"7. {SpendingCategory.Subscription}.");
             Console.WriteLine($"8. {SpendingCategory.Clothes}.");
             Console.WriteLine($"9. {SpendingCategory.Other}.");
-            while (!int.TryParse(Console.ReadLine(), out cat) || cat<0)
+            while (!int.TryParse(Console.ReadLine(), out cat) || cat<0 || cat>9)
             {
                 Console.WriteLine("Wrong input. Please, try again.");
             }

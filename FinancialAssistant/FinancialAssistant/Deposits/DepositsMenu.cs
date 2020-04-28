@@ -59,10 +59,10 @@ namespace FinancialAssistant
             depositsRepository.ShowAll();
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("1. Sort by current money amount.\n2. Sort by interest rate.\n3. Sort by capitalization category.\n4. Sort by initial date\n5. Sort by expiration date\n6. Exit\n");
+            Console.WriteLine("1. Sort by current money amount.\n2. Sort by interest rate.\n3. Sort by capitalization category.\n4. Sort by initial date.\n5. Sort by expiration date.\n6. Exit.\n");
             while (!int.TryParse(Console.ReadLine(), out choice) || !choice.IsPositive() || choice > 6)
             {
-                Console.WriteLine("Wrong input. Please, try again");
+                Console.WriteLine("Wrong input. Please, try again.");
             }
             var deposits = depositsRepository.GetAll();
 

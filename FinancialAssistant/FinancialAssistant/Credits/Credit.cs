@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FinancialAssistant
 {
@@ -31,28 +29,28 @@ namespace FinancialAssistant
             DateTimeOffset loan;
             DateTimeOffset repayment;
 
-            Console.WriteLine("Please, enter the credit amount");
+            Console.WriteLine("Please, enter the credit amount.");
             while(!double.TryParse(Console.ReadLine(),out total) || !total.IsPositive() )
             {
-                Console.WriteLine("Wrong input. Please, try again");
+                Console.WriteLine("Wrong input. Please, try again.");
             }
 
-            Console.WriteLine("Please, enter the interest rate");
+            Console.WriteLine("Please, enter the interest rate.");
             while (!double.TryParse(Console.ReadLine(), out rate) || !rate.IsPositive())
             {
-                Console.WriteLine("Wrong input. Please, try again");
+                Console.WriteLine("Wrong input. Please, try again.");
             }
 
-            Console.WriteLine("Please, enter the loan date (yyyy-mm-dd)");
+            Console.WriteLine("Please, enter the loan date (yyyy-mm-dd).");
             while (!DateTimeOffset.TryParse(Console.ReadLine(), out loan))
             {
-                Console.WriteLine("Wrong input. Please, try again");
+                Console.WriteLine("Wrong input. Please, try again.");
             }
 
-            Console.WriteLine("Please, enter the repayment date (yyyy-mm-dd)");
+            Console.WriteLine("Please, enter the repayment date (yyyy-mm-dd).");
             while (!DateTimeOffset.TryParse(Console.ReadLine(), out repayment) || repayment.CompareTo(loan)<0)
             {
-                Console.WriteLine("Wrong input. Please, try again");
+                Console.WriteLine("Wrong input. Please, try again.");
             }
 
             total = total * (1 + rate / 100);

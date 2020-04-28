@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FinancialAssistant
 {
@@ -55,10 +53,10 @@ namespace FinancialAssistant
             spendingsRepository.ShowAll();
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("Enter '1' to sort by money amount, '2' to sort by category, '3' to exit");
+            Console.WriteLine("Enter '1' to sort by money amount, '2' to sort by category, '3' to exit.");
             while (!int.TryParse(Console.ReadLine(), out choice) || !choice.IsPositive() || choice > 3)
             {
-                Console.WriteLine("Wrong input. Please, try again");
+                Console.WriteLine("Wrong input. Please, try again.");
             }
             Console.Clear();
             if (choice == 3)
@@ -74,7 +72,7 @@ namespace FinancialAssistant
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("To exit enter 0");
+                Console.WriteLine("To exit enter 0.");
                 var category = Spending.ChooseCategory();
                 if (category == 0)
                     return;

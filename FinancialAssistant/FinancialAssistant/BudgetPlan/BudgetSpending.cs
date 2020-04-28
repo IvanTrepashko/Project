@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FinancialAssistant
 {
@@ -29,6 +27,13 @@ namespace FinancialAssistant
             Category = (SpendingCategory)category;
             PlannedAmount = planned;
             SpentAmount = spent;
+        }
+
+        public override string ToString()
+        {
+            string str;
+            str = $"{(int)Category};{PlannedAmount};{SpentAmount}";
+            return str;
         }
     }
 }

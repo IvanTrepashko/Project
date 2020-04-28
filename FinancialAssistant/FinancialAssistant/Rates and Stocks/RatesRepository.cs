@@ -74,7 +74,6 @@ namespace FinancialAssistant
             }
         }
 
-
         IEnumerator IEnumerable.GetEnumerator()
         {
             throw new NotImplementedException();

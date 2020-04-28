@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FinancialAssistant
 {
@@ -34,37 +32,55 @@ namespace FinancialAssistant
 
         public static Deposit Create(int id)
         {
-            double initial = 0;
-            double current = 0;
-            double rate = 0;
+            double initial;
+            double current;
+            double rate;
             CapitalizationType capitalization;
             DateTimeOffset initialdate;
             DateTimeOffset expiration;
 
-            Console.WriteLine("Please, enter the initial amount of money");
+            Console.WriteLine("Please, enter the initial amount of money.");
             while (!double.TryParse(Console.ReadLine(), out initial) || !initial.IsPositive())
             {
-                Console.WriteLine("Wrong input. Please, try again");
+                Console.WriteLine("Wrong input. Please, try again.");
             }
             current = initial;
-            Console.WriteLine("Please, enter the interest rate");
+            Console.WriteLine("Please, enter the interest rate.");
             while (!double.TryParse(Console.ReadLine(), out rate) || !rate.IsPositive())
             {
-                Console.WriteLine("Wrong input. Please, try again");
+                Console.WriteLine("Wrong input. Please, try again.");
             }
 
             capitalization = (CapitalizationType) Deposit.ChooseCapitalizationType();
 
-            Console.WriteLine("Please, enter the intial date of the deposit (yyyy-mm-dd)");
+            Console.WriteLine("Please, enter the intial date of the deposit (yyyy-mm-dd).");
             while (!DateTimeOffset.TryParse(Console.ReadLine(), out initialdate))
             {
-                Console.WriteLine("Wrong input. Please, try again");
+                Console.WriteLine("Wrong input. Please, try again.");
             }
 
-            Console.WriteLine("Please, enter the expiration date (yyyy-mm-dd)");
+            Console.WriteLine("Please, enter the expiration date (yyyy-mm-dd).");
             while (!DateTimeOffset.TryParse(Console.ReadLine(), out expiration) || expiration.CompareTo(initialdate) < 0)
             {
-                Console.WriteLine("Wrong input. Please, try again");
+                Console.WriteLine("Wrong input. Please, try again.");
+            }
+
+            var diff = DateTimeOffset.UtcNow - initialdate;
+
+            if (capitalization == CapitalizationType.No)
+            {
+                current = initial + (initial * rate * diff.Days / (365 * 100));
+            }
+            else
+            if (capitalization == CapitalizationType.Monthly)
+            {
+                double percent = 1 + (rate * 30 / (100 * 365));
+                current = initial * Math.Pow(percent, diff.Days / 30);
+            }
+            else
+            {
+                double percent = 1 + (rate * 365 / (100 * 365));
+                current = initial * Math.Pow(percent, diff.Days / 365);
             }
 
             return new Deposit(id, initial, current, rate,capitalization,initialdate,expiration);

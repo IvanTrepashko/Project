@@ -11,7 +11,7 @@ namespace FinancialAssistant
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("Welcome to the rates and stocks menu.\nWhat do you want to do?");
+                Console.WriteLine("Welcome to the rates and stocks menu.\n\nWhat do you want to do?");
                 Console.WriteLine("1. See more about rates.\n2. See more about stocks.\n3. Currency converter.\n4. Go back.");
                 int.TryParse(Console.ReadLine(), out int choice);
                 switch (choice)
@@ -47,7 +47,7 @@ namespace FinancialAssistant
                         }
                     default:
                         {
-                            Console.WriteLine("Wrong input. Please, try again");
+                            Console.WriteLine("Wrong input. Please, try again.");
                             break;
                         }
                 }
