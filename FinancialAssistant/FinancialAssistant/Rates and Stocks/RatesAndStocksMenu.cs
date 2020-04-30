@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
+
+
 namespace FinancialAssistant
 {
     public static class RatesAndStocksMenu

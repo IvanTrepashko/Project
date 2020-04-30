@@ -58,6 +58,7 @@ namespace FinancialAssistant
             spendingAdded(spending);
 
             _spendings.Add(spending);
+            _totalSpent += spending.MoneyAmount;
         }
 
         public void Delete()

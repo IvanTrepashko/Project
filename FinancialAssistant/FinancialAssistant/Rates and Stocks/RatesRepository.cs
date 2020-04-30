@@ -1,7 +1,6 @@
 ﻿using NbrbAPI.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Globalization;
@@ -13,19 +12,13 @@ namespace FinancialAssistant
     {
         private readonly int _usdId=145;
         private readonly int _eurId = 292;
+
         public int Count { get; private set; }
         public static List<Rate> Rates { get; set; }
         public static Rate Usd { get; private set; }
         public static Rate Eur { get; private set; }
 
-        public Rate this  [int index]
-        {
-            get
-            {
-                return Rates[index];
-            }
-        }
-        
+        public Rate this[int index] => Rates[index];
 
         public async Task CreateRepository()
         {
@@ -47,15 +40,9 @@ namespace FinancialAssistant
             Count = Rates.Count;
         }
 
-        public Rate GetById(int id)
-        {
-            return Rates[id - 1];
-        }
+        public Rate GetById(int id) => Rates[id - 1];
 
-        public IEnumerator<Rate> GetEnumerator()
-        {
-            return Rates.GetEnumerator();
-        }
+        public IEnumerator<Rate> GetEnumerator() => Rates.GetEnumerator();
 
         public void ShowAll()
         {
@@ -74,9 +61,6 @@ namespace FinancialAssistant
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => Rates.GetEnumerator();
     }
 }

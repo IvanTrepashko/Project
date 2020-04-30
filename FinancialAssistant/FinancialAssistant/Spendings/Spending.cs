@@ -31,6 +31,7 @@ namespace FinancialAssistant
 
         public Spending()
         {
+
         }
 
         public static Spending Create()

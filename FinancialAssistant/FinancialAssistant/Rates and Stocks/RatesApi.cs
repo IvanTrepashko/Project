@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using NbrbAPI.Models;
-using System.Linq;
-using System.Globalization;
 
 
 namespace FinancialAssistant

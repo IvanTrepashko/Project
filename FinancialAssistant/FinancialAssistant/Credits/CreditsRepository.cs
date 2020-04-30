@@ -6,8 +6,6 @@ using System.Globalization;
 
 namespace FinancialAssistant
 {
-
-
     public class CreditsRepository : IRepository<Credit>
     {
         private List<Credit> _credits = new List<Credit>();
@@ -56,8 +54,13 @@ namespace FinancialAssistant
         public static void UpdateRemainingAmount(double sum)
         {
             CreditsRepository creditsRepository = new CreditsRepository();
-            int index;
+ 
+            if (creditsRepository.Count==0)
+            {
+                return;
+            }
 
+            int index;
             creditsRepository.ShowAll();
 
             Console.WriteLine("Please, enter credit ID.");
@@ -133,11 +136,13 @@ namespace FinancialAssistant
             string[] strArr = new string[_credits.Count + 1];
             strArr[0] = "totalmoney;remainingmoney;interestrate;loandate;paymentdate";
             int index = 1;
+            
             foreach (var spending in _credits)
             {
                 strArr[index] = spending.ToString();
                 index++;
             }
+            
             File.WriteAllLines(_path, strArr);
         }
 
@@ -157,7 +162,7 @@ namespace FinancialAssistant
                 Console.Clear();
                 ShowAll();
                 Console.WriteLine("Please, enter an ID of credit you want to delete ('0' to exit).");
-                while (!int.TryParse(Console.ReadLine(), out choice) || choice > _credits.Count)
+                while (!int.TryParse(Console.ReadLine(), out choice) || choice > _credits.Count || choice<0)
                 {
                     Console.WriteLine("Wrong input. Please, try again.");
                 }

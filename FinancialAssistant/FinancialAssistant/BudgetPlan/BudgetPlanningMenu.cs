@@ -11,8 +11,10 @@ namespace FinancialAssistant
             while (true)
             {
                 Console.Clear();
+                Hints.GetRandomHint();
+                Console.WriteLine("\n\n");
                 Console.WriteLine("Welcome to budget planning menu.\n\nWhat do you want to do?\n");
-                Console.WriteLine("1. See my current budget plan.\n2. Create new budget plan.\n3. Delete current budget plan.\n4. Go back.");
+                Console.WriteLine("1. See my current budget plan.\n2. Create new budget plan.\n3. Delete current budget plan.\n4. See some budget optimization methods.\n5. Go back.");
                 int.TryParse(Console.ReadLine(), out int choice);
                 switch (choice)
                 {
@@ -32,6 +34,11 @@ namespace FinancialAssistant
                             break;
                         }
                     case 4:
+                        {
+                            BudgetPlan.BudgetPlanningMethods();
+                            break;
+                        }
+                    case 5:
                         {
                             budgetPlan?.Dispose();
                             return;

@@ -13,6 +13,7 @@ namespace FinancialAssistant
         private static readonly string _path = @"budgetplan.csv";
         private readonly CultureInfo _culture = CultureInfo.CreateSpecificCulture("be-BY");
         private readonly StreamReader _textReader;
+        private static readonly string[] _methods = new string[3]; 
 
         public List<BudgetSpending> Spendings { get; set; }
         public DateTimeOffset InitialDate { get; set; }
@@ -20,17 +21,6 @@ namespace FinancialAssistant
         public double InitialMoney { get; set; } = 0;
         public double SavedMoney { get; set; } = 0;
         public double TotatSpendings { get; set; }
-
-        public static void SpendingAdded(Spending spending)
-        {
-            var budgetPlan = new BudgetPlan();
-            if (DateTimeOffset.Now > budgetPlan.ExpirationDate)
-                return;
-            var spend = budgetPlan.Spendings.Where(x => x.Category == spending.Category).ToList();
-            spend[0].SpentAmount += spending.MoneyAmount;
-
-            budgetPlan.Dispose();
-        }
 
         public BudgetPlan(int x)
         {
@@ -63,6 +53,7 @@ namespace FinancialAssistant
             }
             ExpirationDate = date;
             InitialDate = DateTimeOffset.UtcNow;
+            SetMethods();
         }
 
         public BudgetPlan()
@@ -101,12 +92,24 @@ namespace FinancialAssistant
                     SavedMoney = InitialMoney - TotatSpendings;
                 }
                 _textReader.Dispose();
+                SetMethods();
             }
             catch (FileNotFoundException)
             {
                 var file = File.Create(_path);
                 file.Dispose();
             }
+        }
+
+        public static void SpendingAdded(Spending spending)
+        {
+            var budgetPlan = new BudgetPlan();
+            if (DateTimeOffset.Now > budgetPlan.ExpirationDate)
+                return;
+            var spend = budgetPlan.Spendings.Where(x => x.Category == spending.Category).ToList();
+            spend[0].SpentAmount += spending.MoneyAmount;
+
+            budgetPlan.Dispose();
         }
 
         public void Show()
@@ -209,6 +212,31 @@ namespace FinancialAssistant
                 var file = File.Create(_path);
                 file.Dispose();
             }
+        }
+
+        public static void BudgetPlanningMethods()
+        {
+            Console.Clear();
+
+            Console.WriteLine("Method №1");
+            Console.WriteLine(_methods[0]);
+
+            Console.WriteLine();
+            Console.WriteLine("Method №2");
+            Console.WriteLine(_methods[1]);
+
+            Console.WriteLine();
+            Console.WriteLine("Method №3");
+            Console.WriteLine(_methods[2]);
+
+            Console.ReadLine();
+        }
+
+        private void SetMethods()
+        {
+            _methods[0] = "Step 1  - Get rid of loans and depts.\nStep 2 - Save and / or invest 20% of income (never spend this money).\nStep 3 - Live on the remaining 80% for your pleasure.";
+            _methods[1] = "Spend 50% on necessary things (products, rent, transport, insurance, basic clothes, etc.)\nSpend 30% on desired things (cable TV, fashion clothes, jewelry, going to a restaurant, theater tickets, books, hobbies, etc.)\nSave remaining 20%";
+            _methods[2] = "Current expenses - 60%.\nPension savings -10 %.\nLong - term purchases and payments - 10 %.\nIrregular expenses -10 %.\nEntertainment - 10 %.";
         }
     }
 }

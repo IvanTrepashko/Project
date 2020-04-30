@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Linq;
 using System.Globalization;
@@ -12,8 +11,8 @@ namespace FinancialAssistant
         private List<Deposit> _deposits = new List<Deposit>();
         private readonly CultureInfo _culture = CultureInfo.CreateSpecificCulture("be-BY");
         private readonly string _path = @"deposits.csv";
+        
         public int Count { get; private set; }
-
 
         public DepositsRepository()
         {
@@ -62,7 +61,6 @@ namespace FinancialAssistant
             }
         }
 
-
         public void Add(Deposit obj)
         {
             _deposits.Add(obj);
@@ -84,7 +82,7 @@ namespace FinancialAssistant
                 }
                 ShowAll();
                 Console.WriteLine("Please, enter an ID of credit you want to delete ('0' to exit).");
-                while (!int.TryParse(Console.ReadLine(), out choice) || choice > _deposits.Count)
+                while (!int.TryParse(Console.ReadLine(), out choice) || choice > _deposits.Count || choice < 0)
                 {
                     Console.WriteLine("Wrong input. Please, try again.");
                 }
@@ -155,8 +153,6 @@ namespace FinancialAssistant
                 Console.WriteLine("|");
             }
             Console.WriteLine(" _____________________________________________________________________________________________________");
-
-        
         }
 
         public static void ShowAll(List<Deposit> deposits)

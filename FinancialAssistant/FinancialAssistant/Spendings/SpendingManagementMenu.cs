@@ -11,6 +11,8 @@ namespace FinancialAssistant
             while (true)
             {
                 Console.Clear();
+                Hints.GetRandomHint();
+                Console.WriteLine("\n\n");
                 Console.WriteLine("Welcome to Spending Management menu.\n\nWhat do You want to do?");
                 Console.WriteLine("1. Add new spending.");
                 Console.WriteLine("2. See all spendings in last 30 days.");
@@ -22,6 +24,7 @@ namespace FinancialAssistant
                 {
                     case 1:
                         {
+                            Console.Clear();
                             Spending tmp = Spending.Create();
                             spendingsRepository.Add(tmp);
                             break;
@@ -85,6 +88,7 @@ namespace FinancialAssistant
                 return;
             }
         }
+
         private static void SpecifiedSpendings(SpendingsRepository spendingsRepository)
         {
             while (true)

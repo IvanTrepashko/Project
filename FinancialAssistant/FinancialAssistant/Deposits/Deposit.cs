@@ -107,7 +107,5 @@ namespace FinancialAssistant
             str = $"{Id};{InitialMoney};{CurrentMoney};{InterestRate};{(int)Capitalization};{InitialDate};{ExpirationDate}";
             return str;
         }
-
-        
     }
 }
