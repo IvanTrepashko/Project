@@ -56,6 +56,12 @@ namespace FinancialAssistant
         {
             Console.Clear();
             int choice;
+            if (depositsRepository.Count==0)
+            {
+                Console.WriteLine("You don't have any deposits.");
+                Console.ReadLine();
+                return;
+            }
             depositsRepository.ShowAll();
             Console.WriteLine();
             Console.WriteLine();

@@ -12,24 +12,33 @@ namespace FinancialAssistant
     {
         private List<Credit> _credits = new List<Credit>();
         private readonly CultureInfo _culture = CultureInfo.CreateSpecificCulture("be-BY");
+        private readonly string _path = @"credits.csv";
 
         public int Count { get; private set; }
 
         public CreditsRepository()
         {
-            var data = File.ReadAllLines(@"C:\Users\itrep\Desktop\project\project\FinancialAssistant\FinancialAssistant\credits.csv");
-
-            foreach (var credit in data.Skip(1))
+            try
             {
-                var strg = credit.Split(';');
-                int.TryParse(strg[0], out int id);
-                double.TryParse(strg[1], out double total);
-                double.TryParse(strg[2], out double remain);
-                double.TryParse(strg[3], out double rate);
-                DateTimeOffset.TryParse(strg[4], out DateTimeOffset loan);
-                DateTimeOffset.TryParse(strg[5], out DateTimeOffset repayment);
-                _credits.Add(new Credit(id, total, remain, rate, loan, repayment));
-                Count++;
+                var data = File.ReadAllLines(_path);
+
+                foreach (var credit in data.Skip(1))
+                {
+                    var strg = credit.Split(';');
+                    int.TryParse(strg[0], out int id);
+                    double.TryParse(strg[1], out double total);
+                    double.TryParse(strg[2], out double remain);
+                    double.TryParse(strg[3], out double rate);
+                    DateTimeOffset.TryParse(strg[4], out DateTimeOffset loan);
+                    DateTimeOffset.TryParse(strg[5], out DateTimeOffset repayment);
+                    _credits.Add(new Credit(id, total, remain, rate, loan, repayment));
+                    Count++;
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                var file = File.Create(_path);
+                file.Dispose();
             }
         }
 
@@ -74,9 +83,12 @@ namespace FinancialAssistant
         {
             if (_credits.Count==0)
             {
+                Console.Clear();
                 Console.WriteLine("You don't have any credits.");
                 return;
             }
+
+            Console.Clear();
             Console.WriteLine(" ________________________________________________________________________________");
             Console.WriteLine("| ID |      Total      |    Remaining    |  Rate  |  Loan Date  | Repayment Date |");
             Console.WriteLine(" ________________________________________________________________________________");
@@ -126,15 +138,22 @@ namespace FinancialAssistant
                 strArr[index] = spending.ToString();
                 index++;
             }
-            File.WriteAllLines(@"C:\Users\itrep\Desktop\project\project\FinancialAssistant\FinancialAssistant\credits.csv", strArr);
+            File.WriteAllLines(_path, strArr);
         }
 
         public void Delete()
         {
             int choice;
-
+            
             while (true)
             {
+                if (_credits.Count == 0)
+                {
+                    Console.Clear();
+                    Console.WriteLine("You don't have any credits.");
+                    Console.ReadLine();
+                    return;
+                }
                 Console.Clear();
                 ShowAll();
                 Console.WriteLine("Please, enter an ID of credit you want to delete ('0' to exit).");

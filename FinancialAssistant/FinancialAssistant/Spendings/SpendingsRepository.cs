@@ -18,23 +18,33 @@ namespace FinancialAssistant
         private readonly CultureInfo _culture = CultureInfo.CreateSpecificCulture("be-BY");
         private List<Spending> _spendings = new List<Spending>();
         private double _totalSpent;
+        private readonly string _path = @"spendings.csv";
 
         public SpendingsRepository()
         {
-            var data = File.ReadAllLines(@"spendings.csv");
-
-            foreach (var spending in data.Skip(1))
+            try
             {
-                var strg = spending.Split(';');
-                double moneyAmount = double.Parse(strg[0]);
-                DateTimeOffset date = DateTimeOffset.Parse(strg[2]);
-                SpendingCategory category = (SpendingCategory)Enum.Parse(typeof(SpendingCategory), strg[1]);
-                var diff = DateTimeOffset.UtcNow - date.UtcDateTime;
-                if (diff.Days <= 30)
+                var data = File.ReadAllLines(_path);
+
+                foreach (var spending in data.Skip(1))
                 {
-                    _spendings.Add(new Spending(moneyAmount, date, category));
-                    _totalSpent += moneyAmount;
+                    var strg = spending.Split(';');
+                    double moneyAmount = double.Parse(strg[0]);
+                    DateTimeOffset date = DateTimeOffset.Parse(strg[2]);
+                    SpendingCategory category = (SpendingCategory)Enum.Parse(typeof(SpendingCategory), strg[1]);
+                    var diff = DateTimeOffset.UtcNow - date.UtcDateTime;
+                    if (diff.Days <= 30)
+                    {
+                        _spendings.Add(new Spending(moneyAmount, date, category));
+                        _totalSpent += moneyAmount;
+                    }
                 }
+            }
+
+            catch (FileNotFoundException)
+            {
+                var file = File.Create(_path);
+                file.Dispose();
             }
         }
 
@@ -60,12 +70,16 @@ namespace FinancialAssistant
             return _spendings;
         }
 
+        public void ClearHistory()
+        {
+            _spendings = new List<Spending>();
+        }
+
         public void ShowAll()
         {
             if (_spendings.Count==0)
             {
-                Console.WriteLine("You don't have any spendings yet.");
-                return;
+                throw new Exception("You don't have any spendings yet.");
             }
             Console.WriteLine(" ___________________________________________");
             Console.WriteLine("|   Money    |    Category    |     Date    |");
@@ -176,7 +190,7 @@ namespace FinancialAssistant
                 strArr[index] = spending.ToString();
                 index++;
             }
-            File.WriteAllLines(@"C:\Users\itrep\Desktop\project\project\FinancialAssistant\FinancialAssistant\spendings.csv", strArr);
+            File.WriteAllLines(_path, strArr);
         }
     }
 }

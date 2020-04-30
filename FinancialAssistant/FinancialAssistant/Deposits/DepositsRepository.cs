@@ -11,46 +11,54 @@ namespace FinancialAssistant
     {
         private List<Deposit> _deposits = new List<Deposit>();
         private readonly CultureInfo _culture = CultureInfo.CreateSpecificCulture("be-BY");
-
+        private readonly string _path = @"deposits.csv";
         public int Count { get; private set; }
 
 
         public DepositsRepository()
         {
-            var data = File.ReadAllLines(@"C:\Users\itrep\Desktop\project\project\FinancialAssistant\FinancialAssistant\deposits.csv");
-
-            foreach (var credit in data.Skip(1))
+            try
             {
-                var strg = credit.Split(';');
-                int.TryParse(strg[0], out int id);
-                double.TryParse(strg[1], out double initial);
-                double.TryParse(strg[2], out double current);
-                double.TryParse(strg[3], out double rate);
+                var data = File.ReadAllLines(_path);
 
-                CapitalizationType capitalization = (CapitalizationType)Enum.Parse(typeof(SpendingCategory), strg[4]);
-                DateTimeOffset.TryParse(strg[5], out DateTimeOffset initialdate);
-                DateTimeOffset.TryParse(strg[6], out DateTimeOffset expiration);
+                foreach (var credit in data.Skip(1))
+                {
+                    var strg = credit.Split(';');
+                    int.TryParse(strg[0], out int id);
+                    double.TryParse(strg[1], out double initial);
+                    double.TryParse(strg[2], out double current);
+                    double.TryParse(strg[3], out double rate);
 
-                var diff = DateTimeOffset.UtcNow - initialdate;
-                
-                if (capitalization==CapitalizationType.No)
-                {
-                    current = initial + (initial * rate * diff.Days / (365 * 100));
-                }
-                else 
-                if(capitalization==CapitalizationType.Monthly)
-                {
-                    double percent = 1 + (rate * 30 / (100 * 365));
-                    current = initial * Math.Pow(percent,diff.Days/30);
-                }
-                else
-                {
-                    double percent = 1 + (rate * 365 / (100 * 365));
-                    current = initial * Math.Pow(percent, diff.Days / 365);
-                }
+                    CapitalizationType capitalization = (CapitalizationType)Enum.Parse(typeof(SpendingCategory), strg[4]);
+                    DateTimeOffset.TryParse(strg[5], out DateTimeOffset initialdate);
+                    DateTimeOffset.TryParse(strg[6], out DateTimeOffset expiration);
 
-                _deposits.Add(new Deposit(id, initial, current, rate, capitalization, initialdate,expiration));
-                Count++;
+                    var diff = DateTimeOffset.UtcNow - initialdate;
+
+                    if (capitalization == CapitalizationType.No)
+                    {
+                        current = initial + (initial * rate * diff.Days / (365 * 100));
+                    }
+                    else
+                    if (capitalization == CapitalizationType.Monthly)
+                    {
+                        double percent = 1 + (rate * 30 / (100 * 365));
+                        current = initial * Math.Pow(percent, diff.Days / 30);
+                    }
+                    else
+                    {
+                        double percent = 1 + (rate * 365 / (100 * 365));
+                        current = initial * Math.Pow(percent, diff.Days / 365);
+                    }
+
+                    _deposits.Add(new Deposit(id, initial, current, rate, capitalization, initialdate, expiration));
+                    Count++;
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                var file = File.Create(_path);
+                file.Dispose();
             }
         }
 
@@ -68,6 +76,12 @@ namespace FinancialAssistant
             while (true)
             {
                 Console.Clear();
+                if (_deposits.Count==0)
+                {
+                    Console.WriteLine("You don't have any deposits.");
+                    Console.ReadLine();
+                    return;
+                }
                 ShowAll();
                 Console.WriteLine("Please, enter an ID of credit you want to delete ('0' to exit).");
                 while (!int.TryParse(Console.ReadLine(), out choice) || choice > _deposits.Count)
@@ -141,6 +155,8 @@ namespace FinancialAssistant
                 Console.WriteLine("|");
             }
             Console.WriteLine(" _____________________________________________________________________________________________________");
+
+        
         }
 
         public static void ShowAll(List<Deposit> deposits)
@@ -204,7 +220,7 @@ namespace FinancialAssistant
                 strArr[index] = spending.ToString();
                 index++;
             }
-            File.WriteAllLines(@"C:\Users\itrep\Desktop\project\project\FinancialAssistant\FinancialAssistant\deposits.csv", strArr);
+            File.WriteAllLines(_path, strArr);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace FinancialAssistant
     public class BudgetPlan : IDisposable
     {
         private bool _disposed = false;
-        private static readonly string _path = @"C:\Users\itrep\Desktop\project\project\FinancialAssistant\FinancialAssistant\budgetplan.csv";
+        private static readonly string _path = @"budgetplan.csv";
         private readonly CultureInfo _culture = CultureInfo.CreateSpecificCulture("be-BY");
         private readonly StreamReader _textReader;
 
@@ -67,38 +67,46 @@ namespace FinancialAssistant
 
         public BudgetPlan()
         {
-            _textReader= new StreamReader(_path);
-            _textReader.ReadLine();
-
-            if (!_textReader.EndOfStream)
+            try
             {
-                Spendings = new List<BudgetSpending>();
-                for (int i = 0; i < 9; i++)
+                _textReader = new StreamReader(_path);
+                _textReader.ReadLine();
+
+                if (!_textReader.EndOfStream)
                 {
-                    string line = _textReader.ReadLine();
-                    var data = line.Split(';');
-                    int.TryParse(data[0], out int category);
-                    double.TryParse(data[1], out double planned);
-                    double.TryParse(data[2], out double spent);
-                    Spendings.Add(new BudgetSpending(category, planned, spent));
+                    Spendings = new List<BudgetSpending>();
+                    for (int i = 0; i < 9; i++)
+                    {
+                        string line = _textReader.ReadLine();
+                        var data = line.Split(';');
+                        int.TryParse(data[0], out int category);
+                        double.TryParse(data[1], out double planned);
+                        double.TryParse(data[2], out double spent);
+                        Spendings.Add(new BudgetSpending(category, planned, spent));
+                    }
+
+                    string init = _textReader.ReadLine();
+                    DateTimeOffset.TryParse(init, out DateTimeOffset initial);
+                    InitialDate = initial;
+
+                    string expir = _textReader.ReadLine();
+                    DateTimeOffset.TryParse(expir, out DateTimeOffset expiration);
+                    ExpirationDate = expiration;
+
+                    foreach (var spending in Spendings)
+                    {
+                        InitialMoney += spending.PlannedAmount;
+                        TotatSpendings += spending.SpentAmount;
+                    }
+                    SavedMoney = InitialMoney - TotatSpendings;
                 }
-
-                string init = _textReader.ReadLine();
-                DateTimeOffset.TryParse(init, out DateTimeOffset initial);
-                InitialDate = initial;
-
-                string expir = _textReader.ReadLine();
-                DateTimeOffset.TryParse(expir, out DateTimeOffset expiration);
-                ExpirationDate = expiration;
-
-                foreach (var spending in Spendings)
-                {
-                    InitialMoney += spending.PlannedAmount;
-                    TotatSpendings += spending.SpentAmount;
-                }
-                SavedMoney = InitialMoney - TotatSpendings;
+                _textReader.Dispose();
             }
-            _textReader.Dispose();
+            catch (FileNotFoundException)
+            {
+                var file = File.Create(_path);
+                file.Dispose();
+            }
         }
 
         public void Show()
@@ -198,7 +206,8 @@ namespace FinancialAssistant
             if(!_disposed && Spendings==null)
             {
                 File.Delete(_path);
-                File.Create(_path);
+                var file = File.Create(_path);
+                file.Dispose();
             }
         }
     }

@@ -15,7 +15,8 @@ namespace FinancialAssistant
                 Console.WriteLine("1. Add new spending.");
                 Console.WriteLine("2. See all spendings in last 30 days.");
                 Console.WriteLine("3. See spendings of specified category.");
-                Console.WriteLine("4. Go back.");
+                Console.WriteLine("4. Clear history.");
+                Console.WriteLine("5. Go back.");
                 int.TryParse(Console.ReadLine(), out int choice);
                 switch (choice)
                 {
@@ -37,6 +38,11 @@ namespace FinancialAssistant
                         }
                     case 4:
                         {
+                            spendingsRepository.ClearHistory();
+                            break;
+                        }
+                    case 5:
+                        {
                             spendingsRepository.WriteToFile();
                             return;
                         }
@@ -49,22 +55,34 @@ namespace FinancialAssistant
 
         private static void ShowSpendings(SpendingsRepository spendingsRepository)
         {
-            int choice;
-            spendingsRepository.ShowAll();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("Enter '1' to sort by money amount, '2' to sort by category, '3' to exit.");
-            while (!int.TryParse(Console.ReadLine(), out choice) || !choice.IsPositive() || choice > 3)
-            {
-                Console.WriteLine("Wrong input. Please, try again.");
-            }
             Console.Clear();
-            if (choice == 3)
-                return;
-            else
+
+            int choice;
+            try
             {
-                spendingsRepository.ShowSorted(choice);
-                Console.Read();
+
+                spendingsRepository.ShowAll();
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine("Enter '1' to sort by money amount, '2' to sort by category, '3' to exit.");
+                while (!int.TryParse(Console.ReadLine(), out choice) || !choice.IsPositive() || choice > 3)
+                {
+                    Console.WriteLine("Wrong input. Please, try again.");
+                }
+                Console.Clear();
+                if (choice == 3)
+                    return;
+                else
+                {
+                    spendingsRepository.ShowSorted(choice);
+                    Console.Read();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.ReadLine();
+                return;
             }
         }
         private static void SpecifiedSpendings(SpendingsRepository spendingsRepository)

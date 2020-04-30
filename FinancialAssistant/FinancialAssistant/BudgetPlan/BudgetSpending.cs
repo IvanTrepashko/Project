@@ -14,7 +14,7 @@ namespace FinancialAssistant
 
             Category = (SpendingCategory)category;
             Console.WriteLine($"Please, enter planned amount of money for {Category}.");
-            while(!double.TryParse(Console.ReadLine(),out planned) || !planned.IsPositive())
+            while (!double.TryParse(Console.ReadLine(), out planned) || planned < 0)
             {
                 Console.WriteLine("Wrong input. Please, try again.");
             }
