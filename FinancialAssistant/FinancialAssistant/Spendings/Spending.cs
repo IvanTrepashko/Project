@@ -24,6 +24,7 @@ namespace FinancialAssistant
 
         public Spending(double money, DateTimeOffset date, SpendingCategory category)
         {
+            Logger.Log.Info("Spending constructor was called");
             MoneyAmount = money;
             Date = date;
             Category = category;
@@ -31,7 +32,7 @@ namespace FinancialAssistant
 
         public Spending()
         {
-
+            Logger.Log.Info("Spending constructor was called");
         }
 
         public static Spending Create()
@@ -49,6 +50,8 @@ namespace FinancialAssistant
             spending.Category = category;
             spending.MoneyAmount = money;
             spending.Date = DateTimeOffset.UtcNow;
+            
+            Logger.Log.Info("New spending was created");
             return spending;
         }
 

@@ -12,6 +12,7 @@ namespace FinancialAssistant
         {
             StocksApi api = new StocksApi();
             Stocks = await api.Load();
+            Logger.Log.Info("Stocks repository was created");
         }
 
         public Stock GetById(int id)

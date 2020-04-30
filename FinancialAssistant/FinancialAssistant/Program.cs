@@ -8,9 +8,12 @@ namespace FinancialAssistant
     {
         public static async Task Main()
         {
+            Logger.CreateLog();
+            Logger.Log.Info("Application has started.");
+            
             RatesRepository rates = new RatesRepository();
             await rates.CreateRepository();
-            
+
             while (true)
             {
                 DisplayMainMenu();
@@ -44,6 +47,7 @@ namespace FinancialAssistant
                         }
                     case 6:
                         {
+                            Logger.Log.Info("Application has stopped");
                             return;
                         }
                 }

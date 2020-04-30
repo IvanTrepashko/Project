@@ -38,6 +38,8 @@ namespace FinancialAssistant
             Usd = Rates.Find(x => x.Cur_ID == _usdId);
             Eur = Rates.Find(x => x.Cur_ID == _eurId);
             Count = Rates.Count;
+
+            Logger.Log.Info("Rates repository was created");
         }
 
         public Rate GetById(int id) => Rates[id - 1];

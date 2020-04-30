@@ -21,6 +21,8 @@ namespace FinancialAssistant
 
         public Deposit(int id, double initial, double current, double rate, CapitalizationType capitalization, DateTimeOffset initialdate, DateTimeOffset expiration)
         {
+            Logger.Log.Info("Deposit constructor was called");
+
             Id = id;
             InitialMoney = initial;
             CurrentMoney = current;
@@ -32,6 +34,8 @@ namespace FinancialAssistant
 
         public static Deposit Create(int id)
         {
+            Logger.Log.Info("Deposit was created");
+
             double initial;
             double current;
             double rate;

@@ -25,6 +25,8 @@ namespace FinancialAssistant
                         }
                     case 2:
                         {
+                            Logger.Log.Info("New budget plan was created");
+
                             budgetPlan = new BudgetPlan(0);
                             break;
                         }

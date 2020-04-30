@@ -34,6 +34,7 @@ namespace FinancialAssistant
                     }
                 }
             }
+            Logger.Log.Info("Stocks were loaded via API");
             return stocks;
         }
     }

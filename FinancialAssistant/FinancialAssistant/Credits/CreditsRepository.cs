@@ -32,16 +32,20 @@ namespace FinancialAssistant
                     _credits.Add(new Credit(id, total, remain, rate, loan, repayment));
                     Count++;
                 }
+                Logger.Log.Info("Credits repository was created");
             }
             catch (FileNotFoundException)
             {
+                Logger.Log.Error("Credits file was not found");
                 var file = File.Create(_path);
+                Logger.Log.Info("Credits file was created");
                 file.Dispose();
             }
         }
 
         public void Add(Credit obj)
         {
+            Logger.Log.Info("New credit was added to the repository");
             _credits.Add(obj);
             Count++;
         }
@@ -80,6 +84,8 @@ namespace FinancialAssistant
                 }
             }
             creditsRepository.WriteToFile();
+
+            Logger.Log.Info("Credit information was updated");
         }
 
         public void ShowAll()
@@ -142,7 +148,8 @@ namespace FinancialAssistant
                 strArr[index] = spending.ToString();
                 index++;
             }
-            
+
+            Logger.Log.Info("Credits Repository was saved to file");
             File.WriteAllLines(_path, strArr);
         }
 
@@ -171,6 +178,7 @@ namespace FinancialAssistant
 
                 _credits.RemoveAt(choice-1);
                 Count--;
+                Logger.Log.Info("Credit was deleted from the repository");
 
                 foreach (var credit in _credits.Where(x => x.Id > choice - 1))
                 {

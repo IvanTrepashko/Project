@@ -12,6 +12,7 @@ namespace FinancialAssistant
             ApiClient.DefaultRequestHeaders.Accept.Clear();
             ApiClient.DefaultRequestHeaders.Accept.Add(
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            Logger.Log.Info("API Client was initialized");
         }
     }
 }

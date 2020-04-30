@@ -39,11 +39,14 @@ namespace FinancialAssistant
                         _totalSpent += moneyAmount;
                     }
                 }
+                Logger.Log.Info("Spendings repository was created");
             }
 
             catch (FileNotFoundException)
             {
+                Logger.Log.Info("Spendings file was not found");
                 var file = File.Create(_path);
+                Logger.Log.Info("Spendings file was created");
                 file.Dispose();
             }
         }
@@ -59,6 +62,7 @@ namespace FinancialAssistant
 
             _spendings.Add(spending);
             _totalSpent += spending.MoneyAmount;
+            Logger.Log.Info("New spending was added to the repository");
         }
 
         public void Delete()
@@ -73,6 +77,7 @@ namespace FinancialAssistant
 
         public void ClearHistory()
         {
+            Logger.Log.Info("History of spendings was cleared");
             _spendings = new List<Spending>();
         }
 
@@ -192,6 +197,7 @@ namespace FinancialAssistant
                 index++;
             }
             File.WriteAllLines(_path, strArr);
+            Logger.Log.Info("Spendings repository was saved to file");
         }
     }
 }

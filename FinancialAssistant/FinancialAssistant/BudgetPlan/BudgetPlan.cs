@@ -13,7 +13,7 @@ namespace FinancialAssistant
         private static readonly string _path = @"budgetplan.csv";
         private readonly CultureInfo _culture = CultureInfo.CreateSpecificCulture("be-BY");
         private readonly StreamReader _textReader;
-        private static readonly string[] _methods = new string[3]; 
+        private static readonly string[] _methods = new string[3];
 
         public List<BudgetSpending> Spendings { get; set; }
         public DateTimeOffset InitialDate { get; set; }
@@ -24,6 +24,8 @@ namespace FinancialAssistant
 
         public BudgetPlan(int x)
         {
+            Logger.Log.Info("Budget plan constructer was called");
+
             Spendings = new List<BudgetSpending>()
             {
                 new BudgetSpending(1),
@@ -58,6 +60,8 @@ namespace FinancialAssistant
 
         public BudgetPlan()
         {
+            Logger.Log.Info("Budget plan constructor was called");
+
             try
             {
                 _textReader = new StreamReader(_path);
@@ -96,6 +100,8 @@ namespace FinancialAssistant
             }
             catch (FileNotFoundException)
             {
+                Logger.Log.Error("Budget plan file was not found");
+
                 var file = File.Create(_path);
                 file.Dispose();
             }
@@ -103,6 +109,8 @@ namespace FinancialAssistant
 
         public static void SpendingAdded(Spending spending)
         {
+            Logger.Log.Info("Budget information was updated");
+
             var budgetPlan = new BudgetPlan();
             if (DateTimeOffset.Now > budgetPlan.ExpirationDate)
                 return;
@@ -183,11 +191,14 @@ namespace FinancialAssistant
 
         public void Delete()
         {
+            Logger.Log.Info("Budget plan was deleted");
             Spendings = null;
         }
 
         public void Dispose()
         {
+            Logger.Log.Info("Budget plan object was disposed");
+
             if (!_disposed && Spendings!=null)
             {
                 _textReader?.Dispose();
@@ -234,6 +245,8 @@ namespace FinancialAssistant
 
         private void SetMethods()
         {
+            Logger.Log.Info("Budget planning methods were set");
+
             _methods[0] = "Step 1  - Get rid of loans and depts.\nStep 2 - Save and / or invest 20% of income (never spend this money).\nStep 3 - Live on the remaining 80% for your pleasure.";
             _methods[1] = "Spend 50% on necessary things (products, rent, transport, insurance, basic clothes, etc.)\nSpend 30% on desired things (cable TV, fashion clothes, jewelry, going to a restaurant, theater tickets, books, hobbies, etc.)\nSave remaining 20%";
             _methods[2] = "Current expenses - 60%.\nPension savings -10 %.\nLong - term purchases and payments - 10 %.\nIrregular expenses -10 %.\nEntertainment - 10 %.";

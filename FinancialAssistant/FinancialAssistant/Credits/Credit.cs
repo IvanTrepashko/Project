@@ -13,6 +13,8 @@ namespace FinancialAssistant
 
         public Credit(int id, double total,double remain, double rate, DateTimeOffset loan,DateTimeOffset repayment)
         {
+            Logger.Log.Info("Credit constructor was called");
+
             TotalMoneyAmount = total;
             RemainingAmount = remain;
             InterestRate = rate;
@@ -22,7 +24,7 @@ namespace FinancialAssistant
         }
 
         public static Credit Create(int id)
-        {
+        { 
             double total = 0;
             double remain = 0;
             double rate = 0;
@@ -55,7 +57,8 @@ namespace FinancialAssistant
 
             total = total * (1 + rate / 100);
             remain = total;
-            
+
+            Logger.Log.Info("New credit was created");
             return new Credit( id, total, remain, rate, loan, repayment);
 
         }

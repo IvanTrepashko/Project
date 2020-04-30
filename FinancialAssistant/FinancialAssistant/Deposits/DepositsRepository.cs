@@ -53,16 +53,20 @@ namespace FinancialAssistant
                     _deposits.Add(new Deposit(id, initial, current, rate, capitalization, initialdate, expiration));
                     Count++;
                 }
+                Logger.Log.Info("Deposits repository was created");
             }
             catch (FileNotFoundException)
             {
+                Logger.Log.Error("Deposits file was not found");
                 var file = File.Create(_path);
+                Logger.Log.Info("Deposits file was created");
                 file.Dispose();
             }
         }
 
         public void Add(Deposit obj)
         {
+            Logger.Log.Info("New deposit was added to the repository");
             _deposits.Add(obj);
             Count++;
         }
@@ -91,6 +95,7 @@ namespace FinancialAssistant
 
                 _deposits.RemoveAt(choice - 1);
                 Count--;
+                Logger.Log.Info("Deposit was deleted from the repository");
 
                 foreach (var credit in _deposits.Where(x => x.Id > choice - 1))
                 {
@@ -217,6 +222,7 @@ namespace FinancialAssistant
                 index++;
             }
             File.WriteAllLines(_path, strArr);
+            Logger.Log.Info("Deposits repository was saved to file");
         }
     }
 }

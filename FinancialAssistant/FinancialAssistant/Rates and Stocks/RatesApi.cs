@@ -18,6 +18,7 @@ namespace FinancialAssistant
                 if(response.IsSuccessStatusCode)
                 {
                     var rates = await response.Content.ReadAsAsync<Rate[]>();
+                    Logger.Log.Info("Rates were loaded via API");
                     return rates;
                 }
                 else
@@ -36,6 +37,7 @@ namespace FinancialAssistant
                 if (response.IsSuccessStatusCode)
                 {
                     var currencies = await response.Content.ReadAsAsync<Currency[]>();
+                    Logger.Log.Info("Currencies info were loaded via API");
                     return currencies;
                 }
                 else throw new Exception(response.ReasonPhrase);
