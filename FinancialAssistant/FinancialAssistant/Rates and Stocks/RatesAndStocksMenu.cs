@@ -10,6 +10,7 @@ namespace FinancialAssistant
         {
             bool isNew=false;
             StocksRepository stocks=null;
+            
             while (true)
             {
                 Console.Clear();

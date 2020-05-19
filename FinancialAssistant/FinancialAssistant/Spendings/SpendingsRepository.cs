@@ -12,8 +12,8 @@ namespace FinancialAssistant
         public delegate void CreditPaymentAdded(double sum);
         public delegate void SpendingAdded(Spending spending);
 
-        private event CreditPaymentAdded PaymentAdded = CreditsRepository.UpdateRemainingAmount;
-        private event SpendingAdded spendingAdded = BudgetPlan.SpendingAdded;
+        private event CreditPaymentAdded _paymentAdded = CreditsRepository.UpdateRemainingAmount;
+        private event SpendingAdded _spendingAdded = BudgetPlan.SpendingAdded;
 
         private readonly CultureInfo _culture = CultureInfo.CreateSpecificCulture("be-BY");
         private List<Spending> _spendings = new List<Spending>();
@@ -55,10 +55,10 @@ namespace FinancialAssistant
         {
             if (spending.Category==SpendingCategory.CreditPayment)
             {
-                PaymentAdded(spending.MoneyAmount);
+                _paymentAdded(spending.MoneyAmount);
             }
 
-            spendingAdded(spending);
+            _spendingAdded(spending);
 
             _spendings.Add(spending);
             _totalSpent += spending.MoneyAmount;

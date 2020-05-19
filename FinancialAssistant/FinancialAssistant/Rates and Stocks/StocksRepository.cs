@@ -17,7 +17,7 @@ namespace FinancialAssistant
 
         public Stock GetById(int id)
         {
-            throw new NotImplementedException();
+            return Stocks[id];
         }
 
         public void ShowAll()

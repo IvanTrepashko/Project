@@ -15,7 +15,7 @@ namespace FinancialAssistant
 
             using (HttpResponseMessage response =await ApiHelper.ApiClient.GetAsync(url))
             {
-                if(response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
                     var rates = await response.Content.ReadAsAsync<Rate[]>();
                     Logger.Log.Info("Rates were loaded via API");

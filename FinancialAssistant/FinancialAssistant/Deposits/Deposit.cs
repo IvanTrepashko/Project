@@ -11,7 +11,7 @@ namespace FinancialAssistant
 
     public class Deposit
     {
-        public int Id { get; set; } 
+        public int Id { get; set; }
         public double InitialMoney { get; set; }
         public double CurrentMoney { get; set; }
         public double InterestRate { get; set; }
